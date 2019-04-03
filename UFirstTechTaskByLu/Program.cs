@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using UFirstTechTaskByLu.Models;
@@ -22,8 +23,8 @@ namespace UFirstTechTaskByLu
 
             File.WriteAllText("jsonParsed.json", jsonString);
 
-            System.Console.WriteLine("There were {0} lines.", parsedLogs.Count);
-            System.Console.ReadLine();
+            Console.WriteLine("There were {0} lines.", parsedLogs.Count);
+            Console.ReadLine();
         }
     }
 }

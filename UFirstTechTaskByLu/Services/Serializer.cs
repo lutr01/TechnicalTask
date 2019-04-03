@@ -21,8 +21,8 @@ namespace UFirstTechTaskByLu.Services
                 values.Add(match.Groups[i].Value);
             }
             if (!match.Success)
-            { 
-                Console.WriteLine("The line " + line + " was not parsed successfully");
+            {
+                Console.WriteLine("The line : " + line + " was not parsed successfully");
             }
             ParsedLog call = new ParsedLog()
             {
