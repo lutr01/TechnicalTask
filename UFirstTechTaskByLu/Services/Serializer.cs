@@ -9,7 +9,7 @@ namespace UFirstTechTaskByLu.Services
     {
         public static ParsedLog Deserialize(string line)
         {
-            var pattern = "^(.*)\\s+\\[(..):(..):(..):(..)\\]\\s+\"(.*)\\s+(.*)\\s+(....)/?(.*?)\"\\s+(...)\\s*(.*)$";
+            var pattern = "^(.*)\\s+\\[(..):(..):(..):(..)\\]\\s+\"(.*)\\s+(.*)\\s+(....)/?(.*)\"\\s+(...)\\s*(.*)$";
 
             var regex = new Regex(pattern);
             var match = regex.Match(line);
@@ -24,7 +24,8 @@ namespace UFirstTechTaskByLu.Services
             {
                 Console.WriteLine("The line : " + line + " was not parsed successfully");
             }
-            ParsedLog call = new ParsedLog()
+
+           ParsedLog call = new ParsedLog()
             {
                 Host = values[0],
                 DateTime = new Date

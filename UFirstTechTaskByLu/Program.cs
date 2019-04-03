@@ -13,7 +13,7 @@ namespace UFirstTechTaskByLu
         {
             var parsedLogs = new List<ParsedLog>();
 
-            var lines = File.ReadAllLines(@"../../Resources/test.txt");
+            var lines = File.ReadAllLines(@"../../Resources/epa-http.txt");
             foreach (string line in lines)
             {
                 parsedLogs.Add(Serializer.Deserialize(line));
