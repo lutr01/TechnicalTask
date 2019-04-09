@@ -9,41 +9,51 @@ namespace UFirstTechTaskByLu.Services
     {
         public static ParsedLog Deserialize(string line)
         {
-            var pattern = "^(.*)\\s+\\[(..):(..):(..):(..)\\]\\s+\"(.*)\\s+(.*)\\s+(....)/?(.*)\"\\s+(...)\\s*(.*)$";
+            line = Regex.Replace(line, @"[^\u0020-\u007F]", String.Empty);
+            
+            var hostRegex = new Regex(@"^([.\S]*)\s\[\d\d\W\d\d\W\d\d\W\d\d].*");
+            var hostMatch = hostRegex.Match(line);
 
-            var regex = new Regex(pattern);
-            var match = regex.Match(line);
+            var dayRegex = new Regex(@"^[.\S]*\s\[(\d\d)\W(\d\d)\W(\d\d)\W(\d\d)]\s.*");
+            var dayMatch = dayRegex.Match(line);
 
-            var values = new List<string>();
+            var methodRegex = new Regex(@"""([A-Z\S]*).*");
+            var methodMatch = methodRegex.Match(line);
 
-            for (var i = 1; i < match.Groups.Count; i++)
+            var urlRegex = new Regex(@".*\s""[A-Z]*\s(.*)?\s?HTTP?\/?\d\W\d"".*");
+            var urlMatch = urlRegex.Match(line);
+
+            var protocolRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?(HTTP)?\/?\d?\W?\d?"".*");
+            var protocolMatch = protocolRegex.Match(line);
+
+            var versionRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?(\d\W\d)?"".*");
+            var versionMatch = versionRegex.Match(line);
+
+            var codeRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?\d?\W?\d?""\s?([0-9\S]{3})\s?.*");
+            var codeMatch = codeRegex.Match(line);
+
+            var sizeRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?\d?\W?\d?""\s?[0-9\S]{3}\s?([0-9\W]*)?");
+            var sizeMatch = sizeRegex.Match(line);
+
+            ParsedLog call = new ParsedLog()
             {
-                values.Add(match.Groups[i].Value);
-            }
-            if (!match.Success)
-            {
-                Console.WriteLine("The line : " + line + " was not parsed successfully");
-            }
-
-           ParsedLog call = new ParsedLog()
-            {
-                Host = values[0],
+                Host = hostMatch.Groups[1].Value,
                 DateTime = new Date
                 {
-                    Day = values[1],
-                    Hours = values[2],
-                    Minutes = values[3],
-                    Seconds = values[4]
+                    Day = dayMatch.Groups[1].Value,
+                    Hours = dayMatch.Groups[2].Value,
+                    Minutes = dayMatch.Groups[3].Value,
+                    Seconds = dayMatch.Groups[4].Value
                 },
                 Request = new Request
                 {
-                    Method = values[5],
-                    Url = values[6],
-                    Protocol = values[7],
-                    ProtocolVersion = values[8]
+                    Method = methodMatch.Groups[1].Value,
+                    Url = urlMatch.Groups[1].Value,
+                    Protocol = protocolMatch.Groups[1].Value,
+                    ProtocolVersion = versionMatch.Groups[1].Value
                 },
-                ResponseCode = values[9],
-                Size = values[10]
+                ResponseCode = codeMatch.Groups[1].Value,
+                Size = sizeMatch.Groups[1].Value
             };
 
             return call;

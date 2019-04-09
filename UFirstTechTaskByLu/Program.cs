@@ -18,7 +18,7 @@ namespace UFirstTechTaskByLu
 
             Console.WriteLine("Please enter the input file location");
             string inputFileLocation = Console.ReadLine();
-            
+
             while (!Directory.Exists(inputFileLocation))
             {
                 Console.WriteLine("The INPUT location is not valid or not found, please enter the valid existing INPUT file location");
@@ -29,7 +29,7 @@ namespace UFirstTechTaskByLu
 
             Console.WriteLine("Please enter the output file location");
             string outputFileLocation = Console.ReadLine();
-
+            
             while (!Directory.Exists(outputFileLocation))
             {
                 Console.WriteLine("The OUTPUT location is not valid or not found, please enter the valid existing OUTPUT file location");
