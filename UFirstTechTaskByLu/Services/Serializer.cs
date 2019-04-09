@@ -17,13 +17,13 @@ namespace UFirstTechTaskByLu.Services
             var dayRegex = new Regex(@"^.*\[(\d\d)\W(\d\d)\W(\d\d)\W(\d\d)]\s.*");
             var dayMatch = dayRegex.Match(line);
 
-            var methodRegex = new Regex(@"""([A-Z\S]*).*");
+            var methodRegex = new Regex(@"""([A-Z\S]*)?.*"".*");
             var methodMatch = methodRegex.Match(line);
 
-            var urlRegex = new Regex(@"""[A-Z]*\s(.*)?\s?HTTP?\/?\d\W\d"".*");
+            var urlRegex = new Regex(@"""[A-Z]*\s?(.*)?\s*HTTPS?\/?\d*\W*\d*"".*");
             var urlMatch = urlRegex.Match(line);
 
-            var protocolRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?(HTTP)?\/?\d?\W?\d?"".*");
+            var protocolRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?(HTTP)*\/?\d*\W*\d*"".*");
             var protocolMatch = protocolRegex.Match(line);
 
             var versionRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?(\d\W\d)?"".*");
