@@ -11,16 +11,16 @@ namespace UFirstTechTaskByLu.Services
         {
             line = Regex.Replace(line, @"[^\u0020-\u007F]", String.Empty);
             
-            var hostRegex = new Regex(@"^([.\S]*)\s\[\d\d\W\d\d\W\d\d\W\d\d].*");
+            var hostRegex = new Regex(@"^([.\S]*)\s\[.*].*");
             var hostMatch = hostRegex.Match(line);
 
-            var dayRegex = new Regex(@"^[.\S]*\s\[(\d\d)\W(\d\d)\W(\d\d)\W(\d\d)]\s.*");
+            var dayRegex = new Regex(@"^.*\[(\d\d)\W(\d\d)\W(\d\d)\W(\d\d)]\s.*");
             var dayMatch = dayRegex.Match(line);
 
             var methodRegex = new Regex(@"""([A-Z\S]*).*");
             var methodMatch = methodRegex.Match(line);
 
-            var urlRegex = new Regex(@".*\s""[A-Z]*\s(.*)?\s?HTTP?\/?\d\W\d"".*");
+            var urlRegex = new Regex(@"""[A-Z]*\s(.*)?\s?HTTP?\/?\d\W\d"".*");
             var urlMatch = urlRegex.Match(line);
 
             var protocolRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?(HTTP)?\/?\d?\W?\d?"".*");
