@@ -12,5 +12,4 @@ For running the project you will need to follow the steps:
 2. enter the location for the output file where JSON-Array will be located
 3.press enter
 -you will see the amount of lines which were processed
--if any of the lines did not match the REGEX expression, then you will see the message in console. 
 -check the output file in the folder you have chosen as output folder
