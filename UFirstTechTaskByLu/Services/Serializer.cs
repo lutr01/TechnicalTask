@@ -45,7 +45,6 @@ namespace UFirstTechTaskByLu.Services
 
             var protocolMatch = ProtocolRegex.Match(line);
             var versionMatch = VersionRegex.Match(line);
-
             var codeMatch = CodeRegex.Match(line);
             var sizeMatch = SizeRegex.Match(line);
 
