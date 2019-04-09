@@ -29,10 +29,10 @@ namespace UFirstTechTaskByLu.Services
             var versionRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?(\d\W\d)?"".*");
             var versionMatch = versionRegex.Match(line);
 
-            var codeRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?\d?\W?\d?""\s?([0-9\S]{3})\s?.*");
+            var codeRegex = new Regex(@".*\[.*]\s"".*""\s?([0-9\S]{3})\s?.*");
             var codeMatch = codeRegex.Match(line);
 
-            var sizeRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?\d?\W?\d?""\s?[0-9\S]{3}\s?([0-9\W]*)?");
+            var sizeRegex = new Regex(@".*\[.*]\s"".*""\s?[0-9\S]{3}\s?([0-9\W]*)?");
             var sizeMatch = sizeRegex.Match(line);
 
             ParsedLog call = new ParsedLog()
