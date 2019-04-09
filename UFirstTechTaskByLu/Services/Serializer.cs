@@ -7,38 +7,47 @@ namespace UFirstTechTaskByLu.Services
 {
     public static class Serializer
     {
+        public static Regex HostRegex { get; set; }
+        public static Regex DayRegex { get; set; }
+        public static Regex MethodRegex { get; set; }
+        public static Regex UrlRegex { get; set; }
+        public static Regex UrlRegex2 { get; set; }
+        public static Regex ProtocolRegex { get; set; }
+        public static Regex VersionRegex { get; set; }
+        public static Regex CodeRegex { get; set; }
+        public static Regex SizeRegex { get; set; }
+
+        static Serializer()
+        {
+            HostRegex = new Regex(@"^([.\S]*)\s\[.*].*");
+            DayRegex = new Regex(@"^.*\[(\d\d)\W(\d\d)\W(\d\d)\W(\d\d)]\s.*");
+            MethodRegex = new Regex(@"""([A-Z\S]*)?.*"".*");
+            UrlRegex = new Regex(@"""[A-Z]*\s?(.*)?\s*HTTPS?\/?\d*\W*\d*"".*");
+            UrlRegex2 = new Regex(@"""[A-Z]*\s?(.*)?"".*");
+            ProtocolRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?(HTTP)*\/?\d*\W*\d*"".*");
+            VersionRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?(\d\W\d)?"".*");
+            CodeRegex = new Regex(@".*\[.*]\s"".*""\s?([0-9\S]{3})\s?.*");
+            SizeRegex = new Regex(@".*\[.*]\s"".*""\s?[0-9\S]{3}\s?([0-9\W]*)?");
+        }
+
         public static ParsedLog Deserialize(string line)
         {
             line = Regex.Replace(line, @"[^\u0020-\u007F]", String.Empty);
             
-            var hostRegex = new Regex(@"^([.\S]*)\s\[.*].*");
-            var hostMatch = hostRegex.Match(line);
-
-            var dayRegex = new Regex(@"^.*\[(\d\d)\W(\d\d)\W(\d\d)\W(\d\d)]\s.*");
-            var dayMatch = dayRegex.Match(line);
-
-            var methodRegex = new Regex(@"""([A-Z\S]*)?.*"".*");
-            var methodMatch = methodRegex.Match(line);
-
-            var urlRegex = new Regex(@"""[A-Z]*\s?(.*)?\s*HTTPS?\/?\d*\W*\d*"".*");
-            var urlMatch = urlRegex.Match(line);
+            var hostMatch = HostRegex.Match(line);
+            var dayMatch = DayRegex.Match(line);
+            var methodMatch = MethodRegex.Match(line);
+            var urlMatch = UrlRegex.Match(line);
             if (!urlMatch.Success)
             {
-                var urlRegex2 = new Regex(@"""[A-Z]*\s?(.*)?"".*");
-                urlMatch = urlRegex2.Match(line);
+                urlMatch = UrlRegex2.Match(line);
             }
 
-            var protocolRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?(HTTP)*\/?\d*\W*\d*"".*");
-            var protocolMatch = protocolRegex.Match(line);
+            var protocolMatch = ProtocolRegex.Match(line);
+            var versionMatch = VersionRegex.Match(line);
 
-            var versionRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?(\d\W\d)?"".*");
-            var versionMatch = versionRegex.Match(line);
-
-            var codeRegex = new Regex(@".*\[.*]\s"".*""\s?([0-9\S]{3})\s?.*");
-            var codeMatch = codeRegex.Match(line);
-
-            var sizeRegex = new Regex(@".*\[.*]\s"".*""\s?[0-9\S]{3}\s?([0-9\W]*)?");
-            var sizeMatch = sizeRegex.Match(line);
+            var codeMatch = CodeRegex.Match(line);
+            var sizeMatch = SizeRegex.Match(line);
 
             ParsedLog call = new ParsedLog()
             {
