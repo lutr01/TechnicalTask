@@ -22,6 +22,11 @@ namespace UFirstTechTaskByLu.Services
 
             var urlRegex = new Regex(@"""[A-Z]*\s?(.*)?\s*HTTPS?\/?\d*\W*\d*"".*");
             var urlMatch = urlRegex.Match(line);
+            if (!urlMatch.Success)
+            {
+                var urlRegex2 = new Regex(@"""[A-Z]*\s?(.*)?"".*");
+                urlMatch = urlRegex2.Match(line);
+            }
 
             var protocolRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?(HTTP)*\/?\d*\W*\d*"".*");
             var protocolMatch = protocolRegex.Match(line);
