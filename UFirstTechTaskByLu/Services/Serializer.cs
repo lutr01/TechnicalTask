@@ -16,7 +16,6 @@ namespace UFirstTechTaskByLu.Services
         public static Regex VersionRegex { get; set; }
         public static Regex CodeRegex { get; set; }
         public static Regex SizeRegex { get; set; }
-        public static List<string> Methods { get; set; }
 
         static Serializer()
         {
@@ -29,7 +28,6 @@ namespace UFirstTechTaskByLu.Services
             VersionRegex = new Regex(@".*\s""[A-Z]*\s.*?\s?HTTP?\/?(\d\W\d)?"".*");
             CodeRegex = new Regex(@".*\[.*]\s"".*""\s?([0-9\S]{3})\s?.*");
             SizeRegex = new Regex(@".*\[.*]\s"".*""\s?[0-9\S]{3}\s?([0-9\W]*)?");
-            Methods = new List<string>();
         }
 
         public static ParsedLog Deserialize(string line)
@@ -39,7 +37,6 @@ namespace UFirstTechTaskByLu.Services
             var hostMatch = HostRegex.Match(line);
             var dayMatch = DayRegex.Match(line);
             var methodMatch = MethodRegex.Match(line);
-            
             var urlMatch = UrlRegex.Match(line);
             if (!urlMatch.Success)
             {
